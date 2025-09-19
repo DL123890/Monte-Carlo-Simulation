@@ -3,7 +3,7 @@ package mcsim.data;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public abstract class MarketData {
+public class MarketData {
     private double spotPrice;
     private double rfr;
     private double volatility;
