@@ -1,22 +1,19 @@
 package mcsim.data;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 public class MarketData {
     private double spotPrice;
     private double rfr;
     private double volatility;
     private double divYield;
-    private LocalDate maturityDate;
+    private String ticker;
 
     public MarketData(double spotPrice, double rfr, double volatility, 
-                      double divYield, LocalDate maturityDate) {
+                      double divYield, String ticker) {
         this.spotPrice = spotPrice;
         this.rfr = rfr;
         this.volatility = volatility;
         this.divYield = divYield;
-        this.maturityDate = maturityDate;
+        this.ticker = ticker;
     }
 
     public double getSpotPrice() {
@@ -35,15 +32,7 @@ public class MarketData {
         return divYield;
     }
 
-    public LocalDate getMaturityDate() {
-        return maturityDate;
-    }
-
-    public double getDurationUntilMaturity(LocalDate start) {
-        if (maturityDate.isBefore(start)) {
-            throw new IllegalArgumentException("Maturity date is before start date");
-        }
-        long days = ChronoUnit.DAYS.between(start, maturityDate);
-        return days / 365.0;
+    public String getTicker() {
+        return ticker;
     }
 }
