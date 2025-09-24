@@ -45,7 +45,7 @@ public class Portfolio {
         return total;
     }
 
-public double totalDiscountedPayoff(Map<String, Double> spotPrices,
+    public double totalDiscountedPayoff(Map<String, Double> spotPrices,
                                     LocalDate maturityDate,
                                     double r,
                                     LocalDate valuationDate) {
