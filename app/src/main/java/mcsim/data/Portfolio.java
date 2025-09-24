@@ -59,4 +59,18 @@ public class Portfolio {
         }
         return payoff * Math.exp(-r * T);
     }
+
+    public double totalPayoffByTicker(Map<String, Double> spotPrices, LocalDate maturityDate, String ticker) {
+        double total = 0.0;
+        for (Option option : options) {
+            if (option.getMaturityDate().equals(maturityDate) && option.getData().getTicker().equals(ticker)) {
+                Double spotAtMaturity = spotPrices.get(ticker);
+                if (spotAtMaturity == null) {
+                    throw new IllegalArgumentException("Missing spot price for ticker: " + ticker);
+                }
+                total += option.payoff(spotAtMaturity);
+            }
+        }
+        return total;
+    }
 }
