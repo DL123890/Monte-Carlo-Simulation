@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.time.temporal.ChronoUnit;
 
 public class Portfolio {
-    List<Option> options = new ArrayList<>();
+    private List<Option> options = new ArrayList<>();
 
     public void addOption(Option option) {
         options.add(option);
@@ -19,7 +19,7 @@ public class Portfolio {
     }
 
     public List<Option> getOptions() {
-        return options;
+        return List.copyOf(options);
     }
 
     public List<Option> getOptionsByTicker(String ticker) {
