@@ -11,7 +11,7 @@ public class Option {
     private int quantity;
     private LocalDate maturityDate;
 
-    Option(MarketData data, OptionType type, double strikePrice, int quantity, LocalDate maturityDate) {
+    public Option(MarketData data, OptionType type, double strikePrice, int quantity, LocalDate maturityDate) {
         this.data = data;
         this.type = type;
         this.strikePrice = strikePrice;

@@ -61,16 +61,25 @@ public class Portfolio {
     }
 
     public double totalPayoffByTicker(Map<String, Double> spotPrices, LocalDate maturityDate, String ticker) {
-        double total = 0.0;
-        for (Option option : options) {
-            if (option.getMaturityDate().equals(maturityDate) && option.getData().getTicker().equals(ticker)) {
-                Double spotAtMaturity = spotPrices.get(ticker);
-                if (spotAtMaturity == null) {
-                    throw new IllegalArgumentException("Missing spot price for ticker: " + ticker);
-                }
-                total += option.payoff(spotAtMaturity);
-            }
-        }
-        return total;
+        return getOptionsByTicker(ticker).stream()
+        .filter(o -> o.getMaturityDate().equals(maturityDate))
+        .mapToDouble(o -> {
+            Double spot = spotPrices.get(ticker);
+            if (spot == null) throw new IllegalArgumentException("Missing spot price for ticker: " + ticker);
+            return o.payoff(spot);
+        }).sum();
+    }
+
+    public Map<String, Double> totalPayoffByAllTickers(Map<String, Double> spotPrices, LocalDate maturityDate) {
+        return options.stream()
+            .filter(o -> o.getMaturityDate().equals(maturityDate))
+            .collect(Collectors.groupingBy(
+                o -> o.getData().getTicker(),
+                Collectors.summingDouble(o -> {
+                    Double spot = spotPrices.get(o.getData().getTicker());
+                    if (spot == null) throw new IllegalArgumentException("Missing spot price for ticker: " + o.getData().getTicker());
+                    return o.payoff(spot);
+                })
+            ));
     }
 }

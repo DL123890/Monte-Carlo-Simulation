@@ -35,4 +35,8 @@ public class MarketData {
     public String getTicker() {
         return ticker;
     }
+
+    public double getDrift() {
+        return rfr - divYield;
+    }
 }
